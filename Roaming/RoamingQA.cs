@@ -27,7 +27,7 @@ public class RoamingQA
         // Перейти по урлу
         driver.Navigate().GoToUrl(urlRoaming);
 
-        // Ожидать 10 секунд появления поля ввода
+        // Ожидать 10 секунд появления кнопки(загрузка страницы окончена)
         WebDriverWait waitVisibleInput = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         waitVisibleInput.Until(e => e.FindElement(button1Lokator));
         // Кликнуть по кнопке
