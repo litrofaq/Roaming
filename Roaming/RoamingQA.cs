@@ -12,8 +12,27 @@ public class RoamingQA
     
     private CounterAgents myFullFields_specialUserNameEmail = new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001",
         1, "Иванов Сидор Петрович", "ab(c)d,e:f;g<h>i[j]l@example.com","89051234567"); // err = Сервер временно недоступен
+
+
+    //private static CounterAgents[] _counterAgents = new CounterAgents[10];
+    //_counterAgents[0]=
+    private List<CounterAgents> _counterAgents = new List<CounterAgents>()
+    {
+        new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001", 1, "Иванов Сидор Петрович", "abc@example.com","89371234567"),
+        new CounterAgents("Юг-Новый Век", "2320092269", "232001001", 1, "Иванова Вира Петровна","test1@test.ru","89051234567"),
+        new CounterAgents("КРАЙМИА СИНЕРДЖИ 21 ВЕК", "7715446068", "775101001", 2, "Стеклов Фёдор Ильич","test2@test.ru","89061234567"),
+        new CounterAgents("ОКТЯБРЬ", "6316164550", "631601001", 3, "Потапов Егор Викторович","test3@test.ru","89071234567"),
+        new CounterAgents("ООО Компания Март", "2634072094", "262401001", 4, "Сахарова Софья Николаевна","test4@test.ru","89081234567"),
+        new CounterAgents("ВАГОНМАШ", "7804453941", "781001001", 5, "Данилов Артём Петрович","test5@test.ru","89091234567"),
+        new CounterAgents("С легким паром", "0901046025", "090101001", 6, "Иванов Илья Игоревич","test6@test.ru","89101234567"),
+        new CounterAgents("ПАРОМ", "7733258099", "774301001", 7, "Сарцев Потап Васильевич","test7@test.ru","89111234567"),
+        new CounterAgents("Пароходъ", "3917015966", "390601001", 8, "Озерова Олька Сергеевна","test8@test.ru","89121234567"),
+        new CounterAgents("АЛЕКС ЭНЕРДЖИ", "5614086619", "561401001", 9, "Козлов Франк Игоревич","test9@test.ru","89921234567"),
+        new CounterAgents("СВЕТ ЭНЕРГИЯ", "7707332500", "772601001", 10, "Петрованова Алёна Матвеевна","testA@test.ru","89631234567")
+    };
     
-    
+
+
     private ChromeDriver driver;
     private string urlRoaming = "https://qa-course.kontur.host/roaming";
     
