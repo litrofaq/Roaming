@@ -16,9 +16,9 @@ public class RoamingQA
 
     //private static CounterAgents[] _counterAgents = new CounterAgents[10];
     //_counterAgents[0]=
-    private List<CounterAgents> _counterAgents = new List<CounterAgents>()
+    private List<CounterAgents> _counterAgents = new List<CounterAgents>() //0(пустой) +16 операторов
     {
-        new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001", 1, "Иванов Сидор Петрович", "abc@example.com","89371234567"),
+        new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001", 0, "Иванов Сидор Петрович", "abc@example.com","89371234567"),
         new CounterAgents("Юг-Новый Век", "2320092269", "232001001", 1, "Иванова Вира Петровна","test1@test.ru","89051234567"),
         new CounterAgents("КРАЙМИА СИНЕРДЖИ 21 ВЕК", "7715446068", "775101001", 2, "Стеклов Фёдор Ильич","test2@test.ru","89061234567"),
         new CounterAgents("ОКТЯБРЬ", "6316164550", "631601001", 3, "Потапов Егор Викторович","test3@test.ru","89071234567"),
@@ -28,7 +28,13 @@ public class RoamingQA
         new CounterAgents("ПАРОМ", "7733258099", "774301001", 7, "Сарцев Потап Васильевич","test7@test.ru","89111234567"),
         new CounterAgents("Пароходъ", "3917015966", "390601001", 8, "Озерова Олька Сергеевна","test8@test.ru","89121234567"),
         new CounterAgents("АЛЕКС ЭНЕРДЖИ", "5614086619", "561401001", 9, "Козлов Франк Игоревич","test9@test.ru","89921234567"),
-        new CounterAgents("СВЕТ ЭНЕРГИЯ", "7707332500", "772601001", 10, "Петрованова Алёна Матвеевна","testA@test.ru","89631234567")
+        new CounterAgents("СВЕТ ЭНЕРГИЯ", "7707332500", "772601001", 10, "Петрованова Алёна Матвеевна","testA@test.ru","89631234567"),
+        new CounterAgents("ПОТАП", "6678038450", "667801001", 11, "Покачук Анна Ивановна","testA@test.ru","89631222567"),
+        new CounterAgents("ЛОГРУС", "7706416074", "770401001", 12, "Сколов Вагир Едросович","testB@test.ru","89631222567"),
+        new CounterAgents("ФАРМСИНТЕЗ", "7801075160", "470301001", 13, "Зощук Александр Потапович","testC@test.ru","89631222567"),
+        new CounterAgents("НИИК", "5249003464", "524901001", 14, "Сазонова Эльвира Евгеньевна","testD@test.ru","89631222567"),
+        new CounterAgents("ИП Бакашев Ваха Элимбекович", "594807172278", "", 15, "Комаров Петр Ильич","testE@test.ru","89631222567"),
+        new CounterAgents("ИП Ридош Елена Владимировна", "632122259306", "", 16, "Баглаева Ксения Витальевна","testF@test.ru","89631222567"),
     };
     
 
