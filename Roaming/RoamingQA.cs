@@ -8,6 +8,8 @@ namespace Roaming;
 public class RoamingQA
 {
     private ChromeDriver driver;
+    private string urlRoaming = "https://qa-course.kontur.host/roaming";
+    private By button1Lokator = By.ClassName("js-roaming-next-step-button");
     
     [SetUp]
     public void SetUp()
@@ -27,16 +29,16 @@ public class RoamingQA
 
         // Ожидать 10 секунд появления поля ввода
         WebDriverWait waitVisibleInput = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-        waitVisibleInput.Until(e => e.FindElement(emailInputLokator)).SendKeys(email3LevelDomain);
+        waitVisibleInput.Until(e => e.FindElement(button1Lokator));
         // Кликнуть по кнопке
-        driver.FindElement(buttonSendMeLokator).Click();
+        //driver.FindElement(buttonSendMeLokator).Click();
 
 
         Assert.Multiple(() =>
         {
-            Assert.IsFalse(driver.FindElement(errorFormLokator).Displayed,
-                $"\tОжидалась успешная валидация емэйла домена третьего уровня '{email3LevelDomain}'\n" +
-                $"Фактически ошибка валидации емэйл: '{driver.FindElement(errorFormLokator).Text}'");
+            Assert.IsTrue(driver.FindElement(button1Lokator).Displayed);//,
+                //$"\tОжидалась успешная валидация емэйла домена третьего уровня '{email3LevelDomain}'\n" +
+                //$"Фактически ошибка валидации емэйл: '{driver.FindElement(errorFormLokator).Text}'");
         });
     }
     
