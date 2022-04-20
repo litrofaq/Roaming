@@ -18,7 +18,7 @@ public class RoamingQA
     //_counterAgents[0]=
     private List<CounterAgents> _counterAgents = new List<CounterAgents>() //0(пустой) +16 операторов
     {
-        new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001", 0, "Иванов Сидор Петрович", "abc@example.com","89371234567"),
+        new CounterAgents("ООО 'Привет'", "1839001744", "165701001", 0, "Иванов Сидор Петрович", "abc@example.com","89371234567"),
         new CounterAgents("Юг-Новый Век", "2320092269", "232001001", 1, "Иванова Вира Петровна","test1@test.ru","89051234567"),
         new CounterAgents("КРАЙМИА СИНЕРДЖИ 21 ВЕК", "7715446068", "775101001", 2, "Стеклов Фёдор Ильич","test2@test.ru","89061234567"),
         new CounterAgents("ОКТЯБРЬ", "6316164550", "631601001", 3, "Потапов Егор Викторович","test3@test.ru","89071234567"),
@@ -40,6 +40,7 @@ public class RoamingQA
 
 
     private ChromeDriver driver;
+    //private Select select = new Select();
     private string urlRoaming = "https://qa-course.kontur.host/roaming";
     
     // первый экран
@@ -176,9 +177,71 @@ public class RoamingQA
         });
     }   
     
+    
+    // Переход на 3 состояние, ввод 16 контрагентов с разными операторами
+    [Test]
+    public void jumpStep3_add16ValidKA()
+    {
+        // Перейти по урлу
+        driver.Navigate().GoToUrl(urlRoaming);
+
+        // Ожидать 10 секунд появления кнопки(загрузка 1 состояния окончена)
+        WebDriverWait waitVisibleInput = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        waitVisibleInput.Until(e => e.FindElement(button1Lokator));
+        
+        // Ввести все поля
+        enterTrueAllFieldForm1(myFullFields, driver);
+        
+
+        // Кликнуть по кнопке следующий шаг (1 --> 2) 
+        driver.FindElement(button1Lokator).Click();
+        
+        // Ожидать 10 секунд появления ссылки(загрузка 2 состояния окончена)
+        WebDriverWait waitVisible2Step = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        waitVisible2Step.Until(e => e.FindElement(skip2Step));        
+        
+        // Кликнуть пропустить, перейти на следующий шаг (2 --> 3) 
+        driver.FindElement(skip2Step).Click();
+
+        // Ожидать 10 секунд появления кнопки в третьем состоянии (загрузка 3 состояния окончена)
+        WebDriverWait waitVisible3button = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        waitVisible3button.Until(e => e.FindElement(button3Lokator));
+
+        foreach (var KA in _counterAgents)
+        {
+            //Thread.Sleep(3000);
+            driver.FindElement(By.Id("Form_Company")).Clear();
+            driver.FindElement(By.Id("Form_Company")).SendKeys(KA.title);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Inn")).Clear();
+            driver.FindElement(By.Id("Form_Inn")).SendKeys(KA.inn);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Kpp")).Clear();
+            driver.FindElement(By.Id("Form_Kpp")).SendKeys(KA.kpp);
+            //Thread.Sleep(500);
+            //var selelectedObj = new SelectElement(
+            driver.FindElement(By.Id("operator")).SendKeys("НТЦ СТЭК"+Keys.Enter);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Name")).Clear();
+            driver.FindElement(By.Id("Form_Name")).SendKeys(KA.fullName);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Phone")).Clear();
+            driver.FindElement(By.Id("Form_Phone")).SendKeys(KA.telephone);
+            //Thread.Sleep(500);
+            driver.FindElement(By.ClassName("js-test-submit-btn")).Click();
+        }
+        
+        Assert.Multiple(() =>
+        {
+            Assert.IsTrue(driver.FindElement(button3Lokator).Displayed);
+            //$"\tОжидалась успешная валидация и переход на второе состояние '");//{email3LevelDomain}'\n" + 
+            //$"Фактически ошибка валидации емэйл: '{driver.FindElement(errorFormLokator).Text}'");
+        });
+    }      
+    
     [TearDown]
     public void TearDown()
     {
-        driver.Quit();
+        //driver.Quit();
     }
 }
