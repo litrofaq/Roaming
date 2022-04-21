@@ -8,7 +8,7 @@ namespace Roaming;
 public class RoamingQA
 {
     private CounterAgents myFullFields = new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001",
-        1, "Иванов Сидор Петрович", "ivanov@test.ru","89051234567");
+        1, "Иванов Сидор Петрович", "proverka_kazymov_002@test.ru","89051234567");
     
     private CounterAgents myFullFields_specialUserNameEmail = new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001",
         1, "Иванов Сидор Петрович", "ab(c)d,e:f;g<h>i[j]l@example.com","89051234567"); // err = Сервер временно недоступен
@@ -70,7 +70,7 @@ public class RoamingQA
     
     // Третий экран
     private By button3Lokator = By.ClassName("js-contragents-form-submit-btn");
-    
+    // btn btn-lg btn-lng btn-third js-contragents-form-submit-btn js-test-submit-btn
     
     
     [SetUp]
@@ -176,7 +176,72 @@ public class RoamingQA
             //$"Фактически ошибка валидации емэйл: '{driver.FindElement(errorFormLokator).Text}'");
         });
     }   
-    
+ 
+        // Переход на 3 состояние, ввод 4 контрагентов в список, пятого в форму и отправить
+    [Test]
+    public void jumpStep3_add4ValidKA_addKAinForm_submit()
+    {
+        // Перейти по урлу
+        driver.Navigate().GoToUrl(urlRoaming);
+
+        // Ожидать 10 секунд появления кнопки(загрузка 1 состояния окончена)
+        WebDriverWait waitVisibleInput = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        waitVisibleInput.Until(e => e.FindElement(button1Lokator));
+        
+        // Ввести все поля
+        enterTrueAllFieldForm1(myFullFields, driver);
+        
+
+        // Кликнуть по кнопке следующий шаг (1 --> 2) 
+        driver.FindElement(button1Lokator).Click();
+        
+        // Ожидать 10 секунд появления ссылки(загрузка 2 состояния окончена)
+        WebDriverWait waitVisible2Step = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        waitVisible2Step.Until(e => e.FindElement(skip2Step));        
+        
+        // Кликнуть пропустить, перейти на следующий шаг (2 --> 3) 
+        driver.FindElement(skip2Step).Click();
+
+        // Ожидать 10 секунд появления кнопки в третьем состоянии (загрузка 3 состояния окончена)
+        WebDriverWait waitVisible3button = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        waitVisible3button.Until(e => e.FindElement(button3Lokator));
+
+        foreach (var KA in _counterAgents)
+        {
+            //Thread.Sleep(3000);
+            driver.FindElement(By.Id("Form_Company")).Clear();
+            driver.FindElement(By.Id("Form_Company")).SendKeys(KA.title);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Inn")).Clear();
+            driver.FindElement(By.Id("Form_Inn")).SendKeys(KA.inn);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Kpp")).Clear();
+            driver.FindElement(By.Id("Form_Kpp")).SendKeys(KA.kpp);
+            //Thread.Sleep(500);
+            //var selelectedObj = new SelectElement(
+            driver.FindElement(By.Id("operator")).SendKeys("НТЦ СТЭК"+Keys.Enter);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Name")).Clear();
+            driver.FindElement(By.Id("Form_Name")).SendKeys(KA.fullName);
+            //Thread.Sleep(500);
+            driver.FindElement(By.Id("Form_Phone")).Clear();
+            driver.FindElement(By.Id("Form_Phone")).SendKeys(KA.telephone);
+            //Thread.Sleep(500);
+            if (KA.label>4)
+            {
+                continue;
+            }
+            driver.FindElement(By.ClassName("js-test-submit-btn")).Click();
+        }
+        
+        Assert.Multiple(() =>
+        {
+            Assert.IsTrue(driver.FindElement(button3Lokator).Displayed);
+            //$"\tОжидалась успешная валидация и переход на второе состояние '");//{email3LevelDomain}'\n" + 
+            //$"Фактически ошибка валидации емэйл: '{driver.FindElement(errorFormLokator).Text}'");
+        });
+        driver.FindElement(button3Lokator).Click(); //отправить форму
+    }  
     
     // Переход на 3 состояние, ввод 16 контрагентов с разными операторами
     [Test]
@@ -228,6 +293,10 @@ public class RoamingQA
             driver.FindElement(By.Id("Form_Phone")).Clear();
             driver.FindElement(By.Id("Form_Phone")).SendKeys(KA.telephone);
             //Thread.Sleep(500);
+            if (KA.label>4)
+            {
+                continue;
+            }
             driver.FindElement(By.ClassName("js-test-submit-btn")).Click();
         }
         
@@ -237,11 +306,12 @@ public class RoamingQA
             //$"\tОжидалась успешная валидация и переход на второе состояние '");//{email3LevelDomain}'\n" + 
             //$"Фактически ошибка валидации емэйл: '{driver.FindElement(errorFormLokator).Text}'");
         });
+        driver.FindElement(button3Lokator).Click(); //отправить форму
     }      
     
     [TearDown]
     public void TearDown()
     {
-        //driver.Quit();
+        driver.Quit();
     }
 }
