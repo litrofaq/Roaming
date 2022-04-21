@@ -8,7 +8,7 @@ namespace Roaming;
 public class RoamingQA
 {
     private CounterAgents myFullFields = new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001",
-        1, "Иванов Сидор Петрович", "proverka_kazymov_002@test.ru","89051234567");
+        1, "Иванов Сидор Петрович", "proverka_kazymov_003@test.ru","89051234567");
     
     private CounterAgents myFullFields_specialUserNameEmail = new CounterAgents("ООО 'Сладкая сказка'", "1839001744", "165701001",
         1, "Иванов Сидор Петрович", "ab(c)d,e:f;g<h>i[j]l@example.com","89051234567"); // err = Сервер временно недоступен
@@ -208,6 +208,11 @@ public class RoamingQA
 
         foreach (var KA in _counterAgents)
         {
+            var countKA = 5; //кол-во отправляемых КА
+            if (KA.label>countKA)
+            {
+                continue;
+            }
             //Thread.Sleep(3000);
             driver.FindElement(By.Id("Form_Company")).Clear();
             driver.FindElement(By.Id("Form_Company")).SendKeys(KA.title);
@@ -227,7 +232,7 @@ public class RoamingQA
             driver.FindElement(By.Id("Form_Phone")).Clear();
             driver.FindElement(By.Id("Form_Phone")).SendKeys(KA.telephone);
             //Thread.Sleep(500);
-            if (KA.label>4)
+            if (KA.label>(countKA-1))//если КА последний не добавляем в список
             {
                 continue;
             }
