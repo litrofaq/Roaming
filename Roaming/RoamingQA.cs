@@ -242,7 +242,7 @@ public class RoamingQA
             driver.FindElement(By.Id("Form_Kpp")).SendKeys(KA.kpp);
             //Thread.Sleep(500);
             //var selelectedObj = new SelectElement(
-            driver.FindElement(By.Id("operator")).SendKeys("НТЦ СТЭК"+Keys.Enter);
+            driver.FindElement(By.Id("operator")).SendKeys(roamingOperators[KA.label]+Keys.Enter);
             //Thread.Sleep(500);
             driver.FindElement(By.Id("Form_Name")).Clear();
             driver.FindElement(By.Id("Form_Name")).SendKeys(KA.fullName);
